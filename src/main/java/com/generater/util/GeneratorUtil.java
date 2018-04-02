@@ -25,6 +25,9 @@ public class GeneratorUtil {
 		// 生成实体类
 		generateEntity(tableInfo);
 
+		// 生成sqlmapper
+		generateSqlMapper(tableInfo);
+
 	}
 
 	/**
@@ -57,7 +60,37 @@ public class GeneratorUtil {
 
 		fos.flush();
 		fos.close();
+	}
 
+	/**
+	 * @Description 生成sqlmapper
+	 * @author yangyh
+	 * @date 2018年4月2日
+	 * @version V1.0.0
+	 */
+	public static void generateSqlMapper(TableInfo tableInfo) throws IOException, TemplateException {
+		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
+		cfg.setDirectoryForTemplateLoading(new File("D:\\07git\\MySqlGenerater2Java\\src\\main\\resources\\templates"));
+		cfg.setDefaultEncoding("UTF-8");
+		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+		Template temp = cfg.getTemplate("mapper.ftl");
+		Map<String, Object> root = new HashMap<String, Object>();
+
+		root.put("packageName", "com.generater.entity");
+		root.put("className", "xxx");
+
+		root.put("attrs", tableInfo);
+
+		File dir = new File("D:\\07git\\MySqlGenerater2Java\\src\\main\\resources\\sqlmapper");
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		OutputStream fos = new FileOutputStream(new File(dir, "xxx-sqlmapper.xml")); // java文件的生成目录
+		Writer out = new OutputStreamWriter(fos);
+		temp.process(root, out);
+
+		fos.flush();
+		fos.close();
 	}
 
 }
