@@ -1,6 +1,9 @@
 package ${packageName};
 
-import java.math.BigDecimal;
+<#list attrs.package_name_list as package_name> 
+${package_name}
+</#list>
+import java.io.Serializable;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,7 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ${className}   {
+public class ${className} implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
