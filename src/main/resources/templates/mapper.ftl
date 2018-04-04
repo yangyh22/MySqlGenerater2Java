@@ -4,28 +4,28 @@
 
 	<sql id="fullColumns">
         <![CDATA[
-<#list attrs.field_info_list?chunk(5) as list>
+<#list attrs.mysql_field_info_list?chunk(5) as list>
 			<#list list as attr>${attr.name}<#if attr_has_next>,</#if></#list><#if list_has_next>,</#if>
 </#list>
 	    ]]>
 	</sql>
 	
 	<sql id="fullColumnsValues">
-<#list attrs.field_info_list?chunk(5) as list>
+<#list attrs.mysql_field_info_list?chunk(5) as list>
 	    <#list list as attr>${"#{"}${attr.name}${"}"}<#if attr_has_next>,</#if></#list><#if list_has_next>,</#if>
 </#list>
 	</sql>
 	
 	<sql id="fullSet">
 		<set>
-		<#list attrs.field_info_list as attr>
+		<#list attrs.mysql_field_info_list as attr>
 			<if test="null != ${attr.name}">${attr.name} = ${"#{"}${attr.name}${"}"},</if>
 		</#list>
 		</set>
 	</sql>
 	
 	<sql id="fullIf">
-		<#list attrs.field_info_list as attr>
+		<#list attrs.mysql_field_info_list as attr>
 		<if test="null != ${attr.name}">AND ${attr.name} =  ${"#{"}${attr.name}${"}"}</if>
 		</#list>
 	</sql>

@@ -29,9 +29,19 @@ public class TableInfo implements Serializable {
 	String pk;
 
 	/**
-	 * 字段名称列表
+	 * java字段名称列表,当实体类继承基础的VO以后，这个列表与mysql_field_info_list是不同的
 	 */
-	List<FieldInfo> field_info_list;
+	List<FieldInfo> java_field_info_list;
+
+	/**
+	 * mysql字段名称列表
+	 */
+	List<FieldInfo> mysql_field_info_list;
+
+	/**
+	 * 当前的class的名称，用来处理实体类继承基础的VO 以后，删除基础的VO 存在的字段
+	 */
+	Class<?> currentClass;
 
 	@Data
 	public static class FieldInfo implements Serializable {

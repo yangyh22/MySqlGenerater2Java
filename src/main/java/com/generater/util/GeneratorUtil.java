@@ -22,6 +22,9 @@ public class GeneratorUtil {
 		// 生成实体类
 		TableInfo tableInfo = ConnectionUtil.getTableInfo("xxx");
 
+		// tableInfo.setCurrentClass(xxx.class);
+		// tableInfo = ConnectionUtil.checkAndRemove(tableInfo);
+
 		// 生成实体类
 		generateEntity(tableInfo);
 

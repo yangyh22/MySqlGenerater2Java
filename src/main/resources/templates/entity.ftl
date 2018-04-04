@@ -16,7 +16,7 @@ public class ${className} implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-    <#list attrs.field_info_list as attr> 
+    <#list attrs.java_field_info_list as attr> 
 	/**
 	 * ${attr.column_comment}
 	 */
