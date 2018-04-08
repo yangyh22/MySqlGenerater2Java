@@ -1,5 +1,6 @@
 package com.generater.service.impl;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -12,6 +13,12 @@ import org.springframework.stereotype.Service;
 
 import com.generater.entity.TableInfoTree;
 import com.generater.service.TableInfoService;
+import com.generater.util.ConnectionUtil;
+import com.generater.util.GeneratorUtil;
+import com.generater.util.TableInfo;
+import com.generater.vo.GenerateVO;
+
+import freemarker.template.TemplateException;
 
 @Service
 public class TableInfoServiceImpl implements TableInfoService {
@@ -80,6 +87,47 @@ public class TableInfoServiceImpl implements TableInfoService {
 		rs.close();
 		con.close();
 		return result;
+	}
+
+	@Override
+	public void generate(GenerateVO generateVO)
+			throws ClassNotFoundException, SQLException, IOException, TemplateException {
+		generateVO.getList().forEach(item -> {
+			item.getTable_name_list().forEach(tableName -> {
+				// 生成实体类
+				TableInfo tableInfo = null;
+				try {
+					tableInfo = ConnectionUtil.getTableInfo(tableName);
+				} catch (ClassNotFoundException | SQLException e) {
+					e.printStackTrace();
+				}
+
+				// tableInfo.setCurrentClass(Updatable.class);
+				// tableInfo = ConnectionUtil.checkAndRemove(tableInfo);
+
+				// 生成实体类
+				try {
+					GeneratorUtil.generateEntity(tableInfo);
+				} catch (IOException | TemplateException e) {
+					e.printStackTrace();
+				}
+
+				// 生成sqlmapper
+				try {
+					GeneratorUtil.generateSqlMapper(tableInfo);
+				} catch (IOException | TemplateException e) {
+					e.printStackTrace();
+				}
+
+				// 生成dao,没有实现baseDao
+				try {
+					GeneratorUtil.generateDao(tableInfo);
+				} catch (IOException | TemplateException e) {
+					e.printStackTrace();
+				}
+			});
+		});
+
 	}
 
 }

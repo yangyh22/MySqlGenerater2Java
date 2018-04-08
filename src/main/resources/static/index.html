@@ -22,13 +22,14 @@
 	<script type="text/javascript">
 		$('#messageInfoAddTree').tree({
 			url : "/tableInfo/schemaList",
+			type : 'GET',
 			loadFilter : function(data) {
 				return data;
 			},
 			onClick : function(node, a, b, c) { //节点的点击事件
 				if (null == node.children && 'schema' == node.level) {
 					$.ajax({
-						url : "/tableInfo/tableList?schema=" + node.id,
+						url : "/tableInfo/tableList?schema=" + node.text,
 						async : false,
 						success : function(data) {
 							$('#messageInfoAddTree').tree('append', {
@@ -38,7 +39,33 @@
 						}
 					});
 				}
+			},
+			onDblClick : function(node, a, b, c) {
+				if ('table' == node.level) {
+					var tableList = new Array();
+					var q = $('#messageInfoAddTree').tree('getChecked');
+					for (var i = 0; i < q.length; i++) {
+						tableList.push(q[i].text);
+					}
 
+					var param = {
+						"list" : [ {
+							"schema" : "test",
+							"table_name_list" : tableList
+						} ]
+					};
+
+					$.ajax({
+						url : "/tableInfo/generate",
+						data : JSON.stringify(param),  
+						type : 'POST',
+						contentType : "application/json",
+						async : false,
+						success : function(data) {
+							alert(data);
+						}
+					});
+				}
 			}
 		});
 	</script>
