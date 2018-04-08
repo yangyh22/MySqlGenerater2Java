@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 /**
  *  @author ${author}
  */

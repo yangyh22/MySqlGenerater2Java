@@ -21,18 +21,16 @@ import com.generater.util.TableInfo.FieldInfo;
 import freemarker.template.TemplateException;
 
 public class ConnectionUtil {
-
 	private static ThreadLocal<Set<String>> PACKAGE_NAME_SET = new ThreadLocal<>();
 
 	private static String DRIVER = "com.mysql.jdbc.Driver";
 	private static String URL = "jdbc:mysql://192.168.0.53:3306";
 	private static String USER = "root";
 	private static String PASSWORD = "1234";
-	private static String TABLE_SCHEMA = "wx_mall";
+	private static String TABLE_SCHEMA = "test";
 
 	public static void main(String[] args) throws IOException, TemplateException, ClassNotFoundException, SQLException {
-
-		TableInfo tableInfo = getTableInfo("goods");
+		TableInfo tableInfo = getTableInfo("test");
 
 		tableInfo = checkAndRemove(tableInfo);
 
