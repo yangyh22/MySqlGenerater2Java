@@ -39,7 +39,7 @@ public class GeneratorUtil {
 		// 生成sqlmapper
 		generateSqlMapper(tableInfo);
 
-		// 生成dao
+		// 生成dao,没有实现baseDao
 		generateDao(tableInfo);
 
 	}
