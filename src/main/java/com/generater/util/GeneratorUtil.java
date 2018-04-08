@@ -39,6 +39,9 @@ public class GeneratorUtil {
 		// 生成sqlmapper
 		generateSqlMapper(tableInfo);
 
+		// 生成dao
+		generateDao(tableInfo);
+
 	}
 
 	/**
@@ -89,6 +92,7 @@ public class GeneratorUtil {
 
 		root.put("packageName", "com.generater.entity");
 		root.put("className", "Test");
+		root.put("daoPackageName", "com.generater.dao");
 
 		root.put("attrs", tableInfo);
 
@@ -97,6 +101,40 @@ public class GeneratorUtil {
 			dir.mkdirs();
 		}
 		OutputStream fos = new FileOutputStream(new File(dir, "test-sqlmapper.xml")); // java文件的生成目录
+		Writer out = new OutputStreamWriter(fos);
+		temp.process(root, out);
+
+		fos.flush();
+		fos.close();
+	}
+
+	/**
+	 * @Description 生成dao,没有实现baseDao
+	 * @author yangyh
+	 * @date 2018年4月8日
+	 * @version V1.0.0
+	 */
+	public static void generateDao(TableInfo tableInfo) throws IOException, TemplateException {
+		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
+		cfg.setDirectoryForTemplateLoading(new File(TEMPLATES_PATH));
+		cfg.setDefaultEncoding("UTF-8");
+		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+		Template temp = cfg.getTemplate("dao.ftl");
+		Map<String, Object> root = new HashMap<String, Object>();
+
+		root.put("packageName", "com.generater.dao");
+		root.put("className", "TestDao");
+		root.put("entityName", "Test");
+		root.put("entityPackageName", "com.generater.entity");
+		root.put("author", "yangyh");
+
+		root.put("attrs", tableInfo);
+
+		File dir = new File("D:\\07git\\MySqlGenerater2Java\\src\\main\\java\\com\\generater\\dao");
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		OutputStream fos = new FileOutputStream(new File(dir, "TestDao.java")); // java文件的生成目录
 		Writer out = new OutputStreamWriter(fos);
 		temp.process(root, out);
 
