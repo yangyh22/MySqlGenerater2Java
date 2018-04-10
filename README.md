@@ -1,2 +1,3 @@
 # MySqlGenerater2Java
 mysql字段转换成Java实体类
+目前只支持一个写死的库名称
