@@ -9,6 +9,8 @@ import java.io.Writer;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -44,6 +46,26 @@ public class GeneratorUtil {
 
 	}
 
+	private static String upperCase(String str) {
+		char[] ch = str.toCharArray();
+		if (ch[0] >= 'a' && ch[0] <= 'z') {
+			ch[0] = (char) (ch[0] - 32);
+		}
+		return new String(ch);
+	}
+
+	private static String toHump(String str) {
+		str = str.toLowerCase();
+		final StringBuffer sb = new StringBuffer();
+		Pattern p = Pattern.compile("_(\\w)");
+		Matcher m = p.matcher(str);
+		while (m.find()) {
+			m.appendReplacement(sb, m.group(1).toUpperCase());
+		}
+		m.appendTail(sb);
+		return sb.toString();
+	}
+
 	/**
 	 * @Description 生成实体类
 	 * @author yangyh
@@ -58,8 +80,9 @@ public class GeneratorUtil {
 		Template temp = cfg.getTemplate("entity.ftl");
 		Map<String, Object> root = new HashMap<String, Object>();
 
+		String tableName = upperCase(toHump(tableInfo.getTable_name()));
 		root.put("packageName", "com.generater.entity");
-		root.put("className", "Test");
+		root.put("className", tableName);
 		root.put("author", "yangyh");
 
 		root.put("attrs", tableInfo);
@@ -68,7 +91,7 @@ public class GeneratorUtil {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		OutputStream fos = new FileOutputStream(new File(dir, "Test.java")); // java文件的生成目录
+		OutputStream fos = new FileOutputStream(new File(dir, tableName + ".java")); // java文件的生成目录
 		Writer out = new OutputStreamWriter(fos);
 		temp.process(root, out);
 
@@ -90,8 +113,10 @@ public class GeneratorUtil {
 		Template temp = cfg.getTemplate("mapper.ftl");
 		Map<String, Object> root = new HashMap<String, Object>();
 
+		String tableName = upperCase(toHump(tableInfo.getTable_name()));
+
 		root.put("packageName", "com.generater.entity");
-		root.put("className", "Test");
+		root.put("className", tableName);
 		root.put("daoPackageName", "com.generater.dao");
 
 		root.put("attrs", tableInfo);
@@ -100,7 +125,7 @@ public class GeneratorUtil {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		OutputStream fos = new FileOutputStream(new File(dir, "test-sqlmapper.xml")); // java文件的生成目录
+		OutputStream fos = new FileOutputStream(new File(dir, tableInfo.getTable_name() + "-sqlmapper.xml")); // java文件的生成目录
 		Writer out = new OutputStreamWriter(fos);
 		temp.process(root, out);
 
@@ -122,9 +147,11 @@ public class GeneratorUtil {
 		Template temp = cfg.getTemplate("dao.ftl");
 		Map<String, Object> root = new HashMap<String, Object>();
 
+		String tableName = upperCase(toHump(tableInfo.getTable_name()));
+
 		root.put("packageName", "com.generater.dao");
-		root.put("className", "TestDao");
-		root.put("entityName", "Test");
+		root.put("className", tableName + "Dao");
+		root.put("entityName", tableName);
 		root.put("entityPackageName", "com.generater.entity");
 		root.put("author", "yangyh");
 
@@ -134,7 +161,7 @@ public class GeneratorUtil {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		OutputStream fos = new FileOutputStream(new File(dir, "TestDao.java")); // java文件的生成目录
+		OutputStream fos = new FileOutputStream(new File(dir, tableName + "Dao.java")); // java文件的生成目录
 		Writer out = new OutputStreamWriter(fos);
 		temp.process(root, out);
 
