@@ -10,8 +10,14 @@
 <script type="text/javascript" src="/jars/jquery.easyui.min.js"></script>
 </head>
 <body>
+
 	<h2>Schema List</h2>
 	<p>chose table name to generate to java code</p>
+	<div
+		style="padding: 5px; background: #fafafa; width: 500px; border: 1px solid #ccc">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add"
+			onclick="generater()">generater</a>
+	</div>
 	<div style="margin: 10px 0;"></div>
 
 	<ul id="messageInfoAddTree" class="easyui-tree" checkbox="true"
@@ -39,35 +45,34 @@
 						}
 					});
 				}
-			},
-			onDblClick : function(node, a, b, c) {
-				if ('table' == node.level) {
-					var tableList = new Array();
-					var q = $('#messageInfoAddTree').tree('getChecked');
-					for (var i = 0; i < q.length; i++) {
-						tableList.push(q[i].text);
-					}
-
-					var param = {
-						"list" : [ {
-							"schema" : "test",
-							"table_name_list" : tableList
-						} ]
-					};
-
-					$.ajax({
-						url : "/tableInfo/generate",
-						data : JSON.stringify(param),  
-						type : 'POST',
-						contentType : "application/json",
-						async : false,
-						success : function(data) {
-							alert(data);
-						}
-					});
-				}
 			}
 		});
+
+		function generater() {
+			var tableList = new Array();
+			var q = $('#messageInfoAddTree').tree('getChecked');
+			for (var i = 0; i < q.length; i++) {
+				tableList.push(q[i].text);
+			}
+
+			var param = {
+				"list" : [ {
+					"schema" : "test",
+					"table_name_list" : tableList
+				} ]
+			};
+
+			$.ajax({
+				url : "/tableInfo/generate",
+				data : JSON.stringify(param),
+				type : 'POST',
+				contentType : "application/json",
+				async : false,
+				success : function(data) {
+					alert(data);
+				}
+			});
+		}
 	</script>
 
 </body>
