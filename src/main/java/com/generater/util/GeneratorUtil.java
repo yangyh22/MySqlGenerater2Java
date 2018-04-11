@@ -46,6 +46,12 @@ public class GeneratorUtil {
 
 	}
 
+	/**
+	 * @Description 首字母大写
+	 * @author yangyh
+	 * @date 2018年4月11日
+	 * @version V1.0.0
+	 */
 	private static String upperCase(String str) {
 		char[] ch = str.toCharArray();
 		if (ch[0] >= 'a' && ch[0] <= 'z') {
@@ -54,6 +60,12 @@ public class GeneratorUtil {
 		return new String(ch);
 	}
 
+	/**
+	 * @Description 驼峰
+	 * @author yangyh
+	 * @date 2018年4月11日
+	 * @version V1.0.0
+	 */
 	private static String toHump(String str) {
 		str = str.toLowerCase();
 		final StringBuffer sb = new StringBuffer();
