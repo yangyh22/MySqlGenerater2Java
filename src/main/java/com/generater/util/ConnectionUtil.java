@@ -30,7 +30,7 @@ public class ConnectionUtil {
 	private static String TABLE_SCHEMA = "test";
 
 	public static void main(String[] args) throws IOException, TemplateException, ClassNotFoundException, SQLException {
-		TableInfo tableInfo = getTableInfo("test");
+		TableInfo tableInfo = getTableInfo("test",TABLE_SCHEMA);
 
 		tableInfo = checkAndRemove(tableInfo);
 
@@ -99,7 +99,7 @@ public class ConnectionUtil {
 	 * @date 2018年4月2日
 	 * @version V1.0.0
 	 */
-	public static TableInfo getTableInfo(String tableName) throws ClassNotFoundException, SQLException {
+	public static TableInfo getTableInfo(String tableName,String schema) throws ClassNotFoundException, SQLException {
 		init();
 		Connection con;
 		Class.forName(DRIVER);
@@ -107,7 +107,7 @@ public class ConnectionUtil {
 		Statement statement = con.createStatement();
 
 		String sql = "SELECT  COLUMN_NAME, DATA_TYPE,COLUMN_COMMENT,TABLE_NAME FROM information_schema.columns WHERE table_name = '"
-				+ tableName + "' AND TABLE_SCHEMA = '" + TABLE_SCHEMA + "' order by COLUMN_KEY desc";
+				+ tableName + "' AND TABLE_SCHEMA = '" + schema + "' order by COLUMN_KEY desc";
 		ResultSet rs = statement.executeQuery(sql);
 
 		String pk = null;

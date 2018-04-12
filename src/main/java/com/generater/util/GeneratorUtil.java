@@ -30,7 +30,7 @@ public class GeneratorUtil {
 	public static void main(String[] args) throws IOException, TemplateException, ClassNotFoundException, SQLException {
 
 		// 生成实体类
-		TableInfo tableInfo = ConnectionUtil.getTableInfo("test");
+		TableInfo tableInfo = ConnectionUtil.getTableInfo("test","test");
 
 		// tableInfo.setCurrentClass(Updatable.class);
 		// tableInfo = ConnectionUtil.checkAndRemove(tableInfo);

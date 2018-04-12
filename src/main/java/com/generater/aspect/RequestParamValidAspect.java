@@ -20,7 +20,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.annotation.Configuration;
 
-import com.generater.ErrorPOJO;
+import com.generater.vo.base.ErrorPOJO;
 
 import lombok.extern.slf4j.Slf4j;
 

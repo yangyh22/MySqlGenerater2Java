@@ -1,4 +1,4 @@
-package com.generater;
+package com.generater.vo.base;
 
 import java.io.Serializable;
 

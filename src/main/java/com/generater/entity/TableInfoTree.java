@@ -15,5 +15,6 @@ public class TableInfoTree implements Serializable {
 	private String text; // 人员名称
 	private Boolean checked = false; // 是否选中
 	private String level;
+	private String parent_text;
 	private List<TableInfoTree> children; // 子节点
 }

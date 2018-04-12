@@ -32,8 +32,8 @@ public class GenerateVO implements Serializable {
 		 */
 		private static final long serialVersionUID = 1L;
 
-		@NotEmpty
-		private List<String> table_name_list;
+		@NotBlank
+		private String table_name;
 
 		@NotBlank
 		private String schema;

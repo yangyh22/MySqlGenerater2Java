@@ -27,7 +27,7 @@ public class TableInfoServiceImpl implements TableInfoService {
 	private static String URL = "jdbc:mysql://192.168.0.53:3306";
 	private static String USER = "root";
 	private static String PASSWORD = "1234";
-//	private static String TABLE_SCHEMA = "test";
+	// private static String TABLE_SCHEMA = "test";
 
 	@Override
 	public List<TableInfoTree> querySchemaList() throws ClassNotFoundException, SQLException {
@@ -79,6 +79,7 @@ public class TableInfoServiceImpl implements TableInfoService {
 			tableInfoTree.setId(rs.getString("TABLE_NAME"));
 			tableInfoTree.setText(rs.getString("TABLE_NAME"));
 			tableInfoTree.setLevel("table");
+			tableInfoTree.setParent_text(schema);
 			result.add(tableInfoTree);
 		}
 
@@ -91,39 +92,37 @@ public class TableInfoServiceImpl implements TableInfoService {
 	public void generate(GenerateVO generateVO)
 			throws ClassNotFoundException, SQLException, IOException, TemplateException {
 		generateVO.getList().forEach(item -> {
-			item.getTable_name_list().forEach(tableName -> {
-				// 生成实体类
-				TableInfo tableInfo = null;
-				try {
-					tableInfo = ConnectionUtil.getTableInfo(tableName);
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
+			// 生成实体类
+			TableInfo tableInfo = null;
+			try {
+				tableInfo = ConnectionUtil.getTableInfo(item.getTable_name(),item.getSchema());
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
 
-				// tableInfo.setCurrentClass(Updatable.class);
-				// tableInfo = ConnectionUtil.checkAndRemove(tableInfo);
+			// tableInfo.setCurrentClass(Updatable.class);
+			// tableInfo = ConnectionUtil.checkAndRemove(tableInfo);
 
-				// 生成实体类
-				try {
-					GeneratorUtil.generateEntity(tableInfo);
-				} catch (IOException | TemplateException e) {
-					e.printStackTrace();
-				}
+			// 生成实体类
+			try {
+				GeneratorUtil.generateEntity(tableInfo);
+			} catch (IOException | TemplateException e) {
+				e.printStackTrace();
+			}
 
-				// 生成sqlmapper
-				try {
-					GeneratorUtil.generateSqlMapper(tableInfo);
-				} catch (IOException | TemplateException e) {
-					e.printStackTrace();
-				}
+			// 生成sqlmapper
+			try {
+				GeneratorUtil.generateSqlMapper(tableInfo);
+			} catch (IOException | TemplateException e) {
+				e.printStackTrace();
+			}
 
-				// 生成dao,没有实现baseDao
-				try {
-					GeneratorUtil.generateDao(tableInfo);
-				} catch (IOException | TemplateException e) {
-					e.printStackTrace();
-				}
-			});
+			// 生成dao,没有实现baseDao
+			try {
+				GeneratorUtil.generateDao(tableInfo);
+			} catch (IOException | TemplateException e) {
+				e.printStackTrace();
+			}
 		});
 
 	}

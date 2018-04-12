@@ -1,7 +1,7 @@
 package com.generater.dto;
 
 
-import com.generater.ErrorPOJO;
+import com.generater.vo.base.ErrorPOJO;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -52,15 +52,19 @@
 			var tableList = new Array();
 			var q = $('#messageInfoAddTree').tree('getChecked');
 			for (var i = 0; i < q.length; i++) {
-				tableList.push(q[i].text);
+				if (null != $("#messageInfoAddTree").tree("getParent",
+						q[i].target)) {
+					var single = {};
+
+					single.schema = $("#messageInfoAddTree").tree("getParent",
+							q[i].target).text;
+					single.table_name = q[i].text;
+					tableList.push(single);
+				}
 			}
 
-			var param = {
-				"list" : [ {
-					"schema" : "test",
-					"table_name_list" : tableList
-				} ]
-			};
+			var param = {};
+			param.list = tableList
 
 			$.ajax({
 				url : "/tableInfo/generate",
