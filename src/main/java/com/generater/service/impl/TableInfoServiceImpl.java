@@ -27,7 +27,7 @@ public class TableInfoServiceImpl implements TableInfoService {
 	private static String URL = "jdbc:mysql://192.168.0.53:3306";
 	private static String USER = "root";
 	private static String PASSWORD = "1234";
-	private static String TABLE_SCHEMA = "test";
+//	private static String TABLE_SCHEMA = "test";
 
 	@Override
 	public List<TableInfoTree> querySchemaList() throws ClassNotFoundException, SQLException {
@@ -45,7 +45,6 @@ public class TableInfoServiceImpl implements TableInfoService {
 		String sql = "SELECT  DISTINCT TABLE_SCHEMA as text FROM information_schema.`TABLES` ";
 		ResultSet rs = statement.executeQuery(sql);
 
-		String pk = null;
 		while (rs.next()) {
 			TableInfoTree tableInfoTree = new TableInfoTree();
 			tableInfoTree.setId(rs.getString("text"));
@@ -75,7 +74,6 @@ public class TableInfoServiceImpl implements TableInfoService {
 		String sql = "SELECT  TABLE_NAME  FROM information_schema.`TABLES` where TABLE_SCHEMA = '" + schema + "'";
 		ResultSet rs = statement.executeQuery(sql);
 
-		String pk = null;
 		while (rs.next()) {
 			TableInfoTree tableInfoTree = new TableInfoTree();
 			tableInfoTree.setId(rs.getString("TABLE_NAME"));

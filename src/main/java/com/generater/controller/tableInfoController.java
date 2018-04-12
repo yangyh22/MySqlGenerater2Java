@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.generater.aspect.MyInfoAnnotation;
+import com.generater.dto.GenerateDTO;
 import com.generater.entity.TableInfoTree;
 import com.generater.service.TableInfoService;
 import com.generater.vo.GenerateVO;
@@ -41,11 +42,12 @@ public class tableInfoController {
 	}
 
 	@RequestMapping(value = "/generate", method = RequestMethod.POST)
-	@MyInfoAnnotation(value = "FCC")
-	public String generate(@RequestBody GenerateVO generateVO)
+	public GenerateDTO generate(@RequestBody GenerateVO generateVO)
 			throws ClassNotFoundException, SQLException, IOException, TemplateException {
 		tableInfoService.generate(generateVO);
-		return "success";
+		GenerateDTO result = new GenerateDTO();
+		result.setError_info("success");
+		return result;
 	}
 
 }
