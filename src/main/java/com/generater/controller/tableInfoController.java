@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.generater.aspect.MyInfoAnnotation;
 import com.generater.dto.GenerateDTO;
 import com.generater.entity.TableInfoTree;
 import com.generater.service.TableInfoService;
