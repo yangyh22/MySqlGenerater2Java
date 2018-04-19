@@ -5,18 +5,27 @@ public enum JavaTypeEnum {
 	 *  
 	 */
 	DEFAULT("default", "default", null),
+	
 	/**
 	 * 
 	 */
 	INTEGER("int", "Integer", null),
+	
+	/**
+	 *
+	 */
+	TINYINT("tinyint", "Integer", null),
+	
 	/**
 	 * 
 	 */
 	STRING("varchar", "String", null),
+	
 	/**
 	 * 
 	 */
 	DOUBLE("double", "Double", null),
+	
 	/**
 	 * 
 	 */
