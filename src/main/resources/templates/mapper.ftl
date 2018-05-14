@@ -108,7 +108,7 @@
 		<include refid="fullWhere" />
 	</select>
 	
-	<select id="list" resultType="${packageName}${"."}${className}${"."}list${className}Param">
+	<select id="list" resultType="${packageName}${"."}${className}">
 		SELECT
 		<include refid="fullColumns" />
 		FROM ${attrs.table_name}

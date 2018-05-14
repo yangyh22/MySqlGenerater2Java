@@ -18,7 +18,16 @@ public class GenerateVO implements Serializable {
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
+	/**
+	 * 实体类包名
+	 */
+	private String entityPackageName;
+	/**
+	 * dao包名
+	 */
+	private String daoPackageName;
+
 	@Valid
 	@NotEmpty
 	private List<singleGenerateVO> list;

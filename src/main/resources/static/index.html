@@ -18,6 +18,16 @@
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add"
 			onclick="generater()">generater</a>
 	</div>
+    <form id="ff" method="post">
+        <div>
+            <label for="entityPackageName">entityPackageName:</label>
+            <input class="easyui-validatebox" type="text" name="entityPackageName" id="entityPackageName" value="com.generater.entity" />
+        </div>
+        <div>
+            <label for="daoPackageName">Email:</label>
+            <input class="easyui-validatebox" type="text" name="daoPackageName" id="daoPackageName" value="com.generater.dao" />
+        </div>
+    </form>
 	<div style="margin: 10px 0;"></div>
 
 	<ul id="messageInfoAddTree" class="easyui-tree" checkbox="true"
@@ -65,6 +75,8 @@
 
 			var param = {};
 			param.list = tableList
+			param.entityPackageName = $("#entityPackageName").val();
+			param.daoPackageName = $("#daoPackageName").val();
 
 			$.ajax({
 				url : "/tableInfo/generate",

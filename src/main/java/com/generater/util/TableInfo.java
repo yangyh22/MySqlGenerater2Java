@@ -41,7 +41,7 @@ public class TableInfo implements Serializable {
 	/**
 	 * 当前的class的名称，用来处理实体类继承基础的VO 以后，删除基础的VO 存在的字段
 	 */
-	Class<?> currentClass;
+	Class<?> extendClass;
 
 	@Data
 	public static class FieldInfo implements Serializable {

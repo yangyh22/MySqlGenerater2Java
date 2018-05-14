@@ -9,6 +9,7 @@ import java.io.Writer;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,11 +18,15 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.generater.vo.GenerateVO;
+
 /**
- * @Description 生成工具类
  * @author yangyh
- * @date 2018年4月8日
  * @version V1.0.0
+ * @Description 生成工具类
+ * @date 2018年4月8日
  */
 public class GeneratorUtil {
 
@@ -30,19 +35,19 @@ public class GeneratorUtil {
 	public static void main(String[] args) throws IOException, TemplateException, ClassNotFoundException, SQLException {
 
 		// 生成实体类
-		TableInfo tableInfo = ConnectionUtil.getTableInfo("test","test");
+		TableInfo tableInfo = ConnectionUtil.getTableInfo("test", "test");
 
-		// tableInfo.setCurrentClass(Updatable.class);
+		// tableInfo.setExtentClass(Updatable.class);
 		// tableInfo = ConnectionUtil.checkAndRemove(tableInfo);
-
+		GenerateVO generateVO = new GenerateVO();
 		// 生成实体类
-		generateEntity(tableInfo);
+		generateEntity(tableInfo, generateVO);
 
 		// 生成sqlmapper
-		generateSqlMapper(tableInfo);
+		generateSqlMapper(tableInfo,generateVO);
 
 		// 生成dao,没有实现baseDao
-		generateDao(tableInfo);
+		generateDao(tableInfo,generateVO);
 
 	}
 
@@ -84,20 +89,26 @@ public class GeneratorUtil {
 	 * @date 2018年4月2日
 	 * @version V1.0.0
 	 */
-	public static void generateEntity(TableInfo tableInfo) throws IOException, TemplateException {
+	public static void generateEntity(TableInfo tableInfo, GenerateVO generateVO) throws IOException, TemplateException {
 		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
 		cfg.setDirectoryForTemplateLoading(new File(TEMPLATES_PATH));
 		cfg.setDefaultEncoding("UTF-8");
 		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 		Template temp = cfg.getTemplate("entity.ftl");
-		Map<String, Object> root = new HashMap<String, Object>();
+		Map<String, Object> root = new HashMap<>();
 
 		String tableName = upperCase(toHump(tableInfo.getTable_name()));
-		root.put("packageName", "com.generater.entity");
+		String packageName = "entity";
+		packageName = StringUtils.isBlank(generateVO.getEntityPackageName()) ? packageName : generateVO.getEntityPackageName();
+		root.put("packageName", packageName);
 		root.put("className", tableName);
 		root.put("author", "yangyh");
 
 		root.put("attrs", tableInfo);
+		if (null != tableInfo.getExtendClass()) {
+			Set<String> packageNameList = tableInfo.getPackage_name_list();
+			root.put("extendClassParam", "extends com.hjh.mall.common.core.entity.Updatable ");
+		}
 
 		File dir = new File("D:\\07git\\MySqlGenerater2Java\\src\\main\\java\\com\\generater\\entity");
 		if (!dir.exists()) {
@@ -117,7 +128,7 @@ public class GeneratorUtil {
 	 * @date 2018年4月2日
 	 * @version V1.0.0
 	 */
-	public static void generateSqlMapper(TableInfo tableInfo) throws IOException, TemplateException {
+	public static void generateSqlMapper(TableInfo tableInfo,GenerateVO generateVO) throws IOException, TemplateException {
 		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
 		cfg.setDirectoryForTemplateLoading(new File(TEMPLATES_PATH));
 		cfg.setDefaultEncoding("UTF-8");
@@ -127,9 +138,13 @@ public class GeneratorUtil {
 
 		String tableName = upperCase(toHump(tableInfo.getTable_name()));
 
-		root.put("packageName", "com.generater.entity");
+		String entityPackageName = "entity";
+		entityPackageName = StringUtils.isBlank(generateVO.getEntityPackageName()) ? entityPackageName : generateVO.getEntityPackageName();
+		root.put("packageName", entityPackageName);
 		root.put("className", tableName);
-		root.put("daoPackageName", "com.generater.dao");
+		String daoPackageName = "dao";
+		daoPackageName = StringUtils.isBlank(generateVO.getDaoPackageName()) ? daoPackageName : generateVO.getDaoPackageName();
+		root.put("daoPackageName", daoPackageName);
 
 		root.put("attrs", tableInfo);
 
@@ -146,12 +161,12 @@ public class GeneratorUtil {
 	}
 
 	/**
-	 * @Description 生成dao,没有实现baseDao
+	 * @Description 生成dao, 没有实现baseDao
 	 * @author yangyh
 	 * @date 2018年4月8日
 	 * @version V1.0.0
 	 */
-	public static void generateDao(TableInfo tableInfo) throws IOException, TemplateException {
+	public static void generateDao(TableInfo tableInfo,GenerateVO generateVO) throws IOException, TemplateException {
 		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
 		cfg.setDirectoryForTemplateLoading(new File(TEMPLATES_PATH));
 		cfg.setDefaultEncoding("UTF-8");
@@ -161,10 +176,14 @@ public class GeneratorUtil {
 
 		String tableName = upperCase(toHump(tableInfo.getTable_name()));
 
-		root.put("packageName", "com.generater.dao");
+		String packageName = "dao";
+		packageName = StringUtils.isBlank(generateVO.getDaoPackageName()) ? packageName : generateVO.getDaoPackageName();
+		root.put("packageName", packageName);
 		root.put("className", tableName + "Dao");
 		root.put("entityName", tableName);
-		root.put("entityPackageName", "com.generater.entity");
+		String entityPackageName = "entity";
+		entityPackageName = StringUtils.isBlank(generateVO.getEntityPackageName()) ? entityPackageName : generateVO.getEntityPackageName();
+		root.put("entityPackageName", entityPackageName);
 		root.put("author", "yangyh");
 
 		root.put("attrs", tableInfo);

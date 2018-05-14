@@ -105,21 +105,21 @@ public class TableInfoServiceImpl implements TableInfoService {
 
 			// 生成实体类
 			try {
-				GeneratorUtil.generateEntity(tableInfo);
+				GeneratorUtil.generateEntity(tableInfo,generateVO);
 			} catch (IOException | TemplateException e) {
 				e.printStackTrace();
 			}
 
 			// 生成sqlmapper
 			try {
-				GeneratorUtil.generateSqlMapper(tableInfo);
+				GeneratorUtil.generateSqlMapper(tableInfo,generateVO);
 			} catch (IOException | TemplateException e) {
 				e.printStackTrace();
 			}
 
 			// 生成dao,没有实现baseDao
 			try {
-				GeneratorUtil.generateDao(tableInfo);
+				GeneratorUtil.generateDao(tableInfo,generateVO);
 			} catch (IOException | TemplateException e) {
 				e.printStackTrace();
 			}

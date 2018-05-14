@@ -51,7 +51,7 @@ public class ConnectionUtil {
 	 * @version V1.0.0
 	 */
 	public static TableInfo checkAndRemove(TableInfo tableInfo) {
-		Class<?> superclass = tableInfo.getCurrentClass().getSuperclass();
+		Class<?> superclass = tableInfo.getExtendClass().getSuperclass();
 		if (Object.class.equals(superclass)) {
 			// 校验
 			return removeField(tableInfo);
@@ -65,7 +65,7 @@ public class ConnectionUtil {
 	 * @param 校验
 	 */
 	private static TableInfo removeField(TableInfo oldTableInfo) {
-		Class<?> cla = oldTableInfo.getCurrentClass();
+		Class<?> cla = oldTableInfo.getExtendClass();
 		List<Field> fieldList = Arrays.asList(cla.getDeclaredFields());
 		List<FieldInfo> olfFieldInfoList = oldTableInfo.getJava_field_info_list();
 
@@ -73,7 +73,7 @@ public class ConnectionUtil {
 		addTableInfo.setTable_name(oldTableInfo.getTable_name());
 		addTableInfo.setPk(oldTableInfo.getPk());
 		addTableInfo.setPackage_name_list(oldTableInfo.getPackage_name_list());
-		addTableInfo.setCurrentClass(cla.getSuperclass());// 重要,为了递归
+		addTableInfo.setExtendClass(cla.getSuperclass());// 重要,为了递归
 		addTableInfo.setMysql_field_info_list(oldTableInfo.getMysql_field_info_list());
 
 		// 匹配出父类没有的字段列表

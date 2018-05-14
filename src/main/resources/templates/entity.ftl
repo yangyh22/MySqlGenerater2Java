@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ${className} implements Serializable {
+public class ${className} ${extendClassParam!''}implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -29,7 +29,7 @@ public class ${className} implements Serializable {
     </#list>
     @Data
 	@EqualsAndHashCode(callSuper = false)
-	public class list${className}Param extends ${className} {
+	public class List${className}Param extends ${className} {
 	
 		private static final long serialVersionUID = 1L;
 		

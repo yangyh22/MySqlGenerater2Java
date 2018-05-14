@@ -2,7 +2,7 @@ package ${packageName};
 
 import java.util.List;
 import ${entityPackageName}${"."}${entityName};
-import ${entityPackageName}${"."}${entityName}${"."}list${entityName}Param;
+import ${entityPackageName}${"."}${entityName}${"."}List${entityName}Param;
 
 /**
  *  @author ${author}
@@ -17,9 +17,9 @@ public interface ${className} {
     
     public List<${entityName}> query(${entityName} entity);
     
-    public List<${entityName}> list(list${entityName}Param param);
+    public List<${entityName}> list(List${entityName}Param param);
     
-    public int countList(list${entityName}Param param);
+    public int countList(List${entityName}Param param);
     
     public int update(${entityName} entity);
     
