@@ -9,14 +9,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.generater.entity.TableInfoTree;
 import org.springframework.stereotype.Service;
 
-import com.generater.entity.TableInfoTree;
 import com.generater.service.TableInfoService;
 import com.generater.util.ConnectionUtil;
 import com.generater.util.GeneratorUtil;
 import com.generater.util.TableInfo;
 import com.generater.vo.GenerateVO;
+import com.hjh.mall.common.core.entity.Updatable;
 
 import freemarker.template.TemplateException;
 
@@ -100,8 +101,8 @@ public class TableInfoServiceImpl implements TableInfoService {
 				e.printStackTrace();
 			}
 
-			// tableInfo.setCurrentClass(Updatable.class);
-			// tableInfo = ConnectionUtil.checkAndRemove(tableInfo);
+			 tableInfo.setExtendClass(Updatable.class);
+			 tableInfo = ConnectionUtil.checkAndRemove(tableInfo);
 
 			// 生成实体类
 			try {

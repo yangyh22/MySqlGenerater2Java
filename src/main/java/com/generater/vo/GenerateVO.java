@@ -29,7 +29,6 @@ public class GenerateVO implements Serializable {
 	private String daoPackageName;
 
 	@Valid
-	@NotEmpty
 	private List<singleGenerateVO> list;
 
 	@Data
@@ -41,10 +40,8 @@ public class GenerateVO implements Serializable {
 		 */
 		private static final long serialVersionUID = 1L;
 
-		@NotBlank
 		private String table_name;
 
-		@NotBlank
 		private String schema;
 
 	}
