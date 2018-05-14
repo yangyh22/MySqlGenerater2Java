@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -18,6 +19,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.generater.vo.GenerateVO;
@@ -107,7 +109,14 @@ public class GeneratorUtil {
 		root.put("attrs", tableInfo);
 		if (null != tableInfo.getExtendClass()) {
 			Set<String> packageNameList = tableInfo.getPackage_name_list();
-			root.put("extendClassParam", "extends com.hjh.mall.common.core.entity.Updatable ");
+			root.put("extendClassParam", "extends Updatable ");
+			Set<String> package_name_list = tableInfo.getPackage_name_list();
+			if(CollectionUtils.isNotEmpty(package_name_list)){
+				package_name_list.add("import com.hjh.mall.common.core.entity.Updatable;");
+			}else {
+				package_name_list = new HashSet<>();
+				package_name_list.add("com.hjh.mall.common.core.entity");
+			}
 		}
 
 		File dir = new File("D:\\07git\\MySqlGenerater2Java\\src\\main\\java\\com\\generater\\entity");
