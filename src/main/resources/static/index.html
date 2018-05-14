@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" type="text/css"
-	href="/css/themes/default/easyui.css" />
-<link rel="stylesheet" type="text/css" href="/css/themes/icon.css" />
-<script type="text/javascript" src="/jars/jquery.min.js"></script>
-<script type="text/javascript" src="/jars/jquery.easyui.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <link rel="stylesheet" type="text/css"
+          href="/css/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/themes/icon.css"/>
+    <script type="text/javascript" src="/jars/jquery.min.js"></script>
+    <script type="text/javascript" src="/jars/jquery.easyui.min.js"></script>
 </head>
 <body>
 
-	<h2>Schema List</h2>
-	<p>chose table name to generate to java code</p>
-	<div
-		style="padding: 5px; background: #fafafa; width: 500px; border: 1px solid #ccc">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-add"
-			onclick="generater()">generater</a>
-	</div>
-    <form id="ff" method="post">
-        <div>
-            <label for="entityPackageName">entityPackageName:</label>
-            <input class="easyui-validatebox" type="text" name="entityPackageName" id="entityPackageName" value="com.generater.entity" />
-        </div>
-        <div>
-            <label for="daoPackageName">Email:</label>
-            <input class="easyui-validatebox" type="text" name="daoPackageName" id="daoPackageName" value="com.generater.dao" />
-        </div>
-    </form>
-	<div style="margin: 10px 0;"></div>
+<h2>Schema List</h2>
+<p>chose table name to generate to java code</p>
+<div
+        style="padding: 5px; background: #fafafa; width: 500px; border: 1px solid #ccc">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add"
+       onclick="generater()">generater</a>
+</div>
+<form id="ff" method="post">
+    <div>
+        <label for="entityPackageName">entityPackageName:</label>
+        <input class="easyui-validatebox" type="text" name="entityPackageName" id="entityPackageName"
+               value="com.generater.entity"/>
+    </div>
+    <div>
+        <label for="daoPackageName">Email:</label>
+        <input class="easyui-validatebox" type="text" name="daoPackageName" id="daoPackageName"
+               value="com.generater.dao"/>
+    </div>
+</form>
+<div style="margin: 10px 0;"></div>
 
-	<ul id="messageInfoAddTree" class="easyui-tree" checkbox="true"
-		data-options="lines:true" style="height: 94%"></ul>
+<ul id="messageInfoAddTree" class="easyui-tree" checkbox="true"
+    data-options="lines:true" style="height: 94%"></ul>
 
 
-
-	<script type="text/javascript">
+<script type="text/javascript">
 		$('#messageInfoAddTree').tree({
 			url : "/tableInfo/schemaList",
 			type : 'GET',
@@ -85,11 +86,14 @@
 				contentType : "application/json",
 				async : false,
 				success : function(data) {
-					alert(data.error_info);
+				if(null!=data.zipFilePath){
+    				window.open("/tableInfo/downloadZip?zipFilePath="+data.zipFilePath)
+    				}
 				}
 			});
 		}
-	</script>
+
+</script>
 
 </body>
 </html>

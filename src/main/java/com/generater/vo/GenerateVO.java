@@ -20,6 +20,16 @@ public class GenerateVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * tempFilePath
+	 */
+	private String tempFilePath;
+
+	/**
+	 * 生成之后的文件采取下载模式
+	 */
+	private String downLoadMode = "1";
+
+	/**
 	 * 实体类包名
 	 */
 	private String entityPackageName;

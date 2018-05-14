@@ -15,4 +15,6 @@ public class GenerateDTO extends ErrorPOJO {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private String zipFilePath;
+
 }

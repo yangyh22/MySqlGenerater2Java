@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,6 +22,7 @@ import freemarker.template.TemplateExceptionHandler;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.ClassUtils;
 
 import com.generater.vo.GenerateVO;
 
@@ -119,7 +121,11 @@ public class GeneratorUtil {
 			}
 		}
 
-		File dir = new File("D:\\07git\\MySqlGenerater2Java\\src\\main\\java\\com\\generater\\entity");
+		String defaultFilePath = "D:\\07git\\MySqlGenerater2Java\\src\\main\\java\\com\\generater\\entity";
+		if ("1".equals(generateVO.getDownLoadMode())) {
+			defaultFilePath = generateVO.getTempFilePath();
+		}
+		File dir = new File(defaultFilePath);
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
@@ -157,7 +163,11 @@ public class GeneratorUtil {
 
 		root.put("attrs", tableInfo);
 
-		File dir = new File("D:\\07git\\MySqlGenerater2Java\\src\\main\\resources\\sqlmapper");
+		String defaultFilePath = "D:\\07git\\MySqlGenerater2Java\\src\\main\\resources\\sqlmapper";
+		if ("1".equals(generateVO.getDownLoadMode())) {
+			defaultFilePath = generateVO.getTempFilePath();
+		}
+		File dir = new File(defaultFilePath);
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
@@ -197,7 +207,11 @@ public class GeneratorUtil {
 
 		root.put("attrs", tableInfo);
 
-		File dir = new File("D:\\07git\\MySqlGenerater2Java\\src\\main\\java\\com\\generater\\dao");
+		String defaultFilePath = "D:\\07git\\MySqlGenerater2Java\\src\\main\\java\\com\\generater\\dao";
+		if ("1".equals(generateVO.getDownLoadMode())) {
+			defaultFilePath = generateVO.getTempFilePath();
+		}
+		File dir = new File(defaultFilePath);
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
