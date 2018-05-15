@@ -3,3 +3,5 @@ spring:
     view:
       prefix: /
       suffix: .html
+server:
+  port: 80
