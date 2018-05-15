@@ -12,5 +12,5 @@ mysql字段转换成Java实体类,以下为需要做的事情，排名不分先�
 * docker化(与dockerHub)关联
 * 生成的代码路径，从页面端返回(压缩包?)(done,现在使用打压缩包然后一起下载的方式)
 * 选择生成代码类型（entity、dao）
-* ssh,ftp 传输文件（内网）
-* 传输到windows（内网）
+* ssh,ftp 传输文件（内网）（no need）
+* 传输到windows（内网）（no need）
