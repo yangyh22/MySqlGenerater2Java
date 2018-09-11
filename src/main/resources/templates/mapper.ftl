@@ -48,7 +48,7 @@
 			ORDER BY
 			<foreach collection="sortMarkers" item="sortMarker"
 				separator=",">
-				${"#"}{sortMarker.field} ${"#"}{sortMarker.direction}
+				${"$"}{sortMarker.field} ${"$"}{sortMarker.direction}
 			</foreach>
 		</if>
 		<if test="null != page">
